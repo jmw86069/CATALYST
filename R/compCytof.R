@@ -97,15 +97,17 @@ setMethod(f="compCytof",
 #' @rdname compCytof
 setMethod(f="compCytof",
     signature=signature(x="flowSet", y="ANY"),
-    definition=function(x, y, out_path=NULL, method="flow") {
-        fsApply(x, compCytof, y, out_path, method)
+    definition=function(x, y, out_path=NULL, method="flow",
+       isotope_list=CATALYST::isotope_list) {
+        fsApply(x, compCytof, y, out_path, method, isotope_list)
     })
 
 # ------------------------------------------------------------------------------
 #' @rdname compCytof
 setMethod(f="compCytof",
     signature=signature(x="character", y="matrix"),
-    definition=function(x, y, out_path=NULL, method="flow") {
+    definition=function(x, y, out_path=NULL, method="flow",
+       isotope_list=CATALYST::isotope_list) {
         if (!file.exists(x))
             stop("x is neither a flowFrame nor a valid file/folder path.")
         fcs <- list.files(x, ".fcs", ignore.case=TRUE, full.names=TRUE)
@@ -114,10 +116,10 @@ setMethod(f="compCytof",
         ffs <- lapply(fcs, flowCore::read.FCS)
         
         if (is.null(out_path)) {
-            lapply(ffs, function(i) compCytof(i, y, out_path, method))
+            lapply(ffs, function(i) compCytof(i, y, out_path, method, isotope_list))
         } else {
             for (i in seq_along(ffs))
-                compCytof(ffs[[i]], y, out_path, method)
+                compCytof(ffs[[i]], y, out_path, method, isotope_list)
         }
     })
 
@@ -125,6 +127,8 @@ setMethod(f="compCytof",
 #' @rdname compCytof
 setMethod(f="compCytof",
     signature=signature(x="ANY", y="data.frame"),
-    definition=function(x, y, out_path=NULL, method="flow") {
-        compCytof(x, as.matrix(y), out_path, method)
+    definition=function(x, y, out_path=NULL, method="flow",
+       isotope_list=CATALYST::isotope_list) {
+        compCytof(x, as.matrix(y), out_path, method,
+           isotope_list)
     })

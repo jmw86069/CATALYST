@@ -115,9 +115,11 @@ setMethod(f="plotSpillmat",
 setMethod(f="plotSpillmat",
     signature=signature(bc_ms="ANY", SM="data.frame"),
     definition=function(bc_ms, SM, 
-        out_path=NULL, name_ext=NULL, annotate=TRUE, plotly=TRUE) {
-        plotSpillmat(bc_ms, as.matrix(SM), out_path=NULL, 
-            name_ext=NULL, annotate=TRUE, plotly=TRUE)
+       out_path=NULL, name_ext=NULL, annotate=TRUE, plotly=TRUE,
+       isotope_list=CATALYST::isotope_list) {
+   plotSpillmat(bc_ms, as.matrix(SM), out_path=out_path,
+      name_ext=name_ext, annotate=annotate, plotly=plotly,
+      isotope_list=isotope_list)
     }
 )
 
@@ -126,8 +128,10 @@ setMethod(f="plotSpillmat",
 setMethod(f="plotSpillmat",
     signature=signature(bc_ms="character", SM="ANY"),
     definition=function(bc_ms, SM, 
-        out_path=NULL, name_ext=NULL, annotate=TRUE, plotly=TRUE) {
-        plotSpillmat(as.numeric(bc_ms), SM, out_path=NULL, 
-            name_ext=NULL, annotate=TRUE, plotly=TRUE)
+       out_path=NULL, name_ext=NULL, annotate=TRUE, plotly=TRUE,
+       isotope_list=CATALYST::isotope_list) {
+   plotSpillmat(as.numeric(bc_ms), SM, out_path=out_path,
+      name_ext=name_ext, annotate=annotate, plotly=plotly,
+      isotope_list=isotope_list)
     }
 )

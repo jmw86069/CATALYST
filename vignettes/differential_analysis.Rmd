@@ -236,17 +236,18 @@ plotSNE(daF, color_by = 8, facet = "sample_id")
 Please refer to the `r Biocpkg("diffcyt")` [vignette](https://bioconductor.org/packages/3.7/bioc/vignettes/diffcyt/inst/doc/diffcyt_workflow.html) and R documentation (`??diffcyt`) for more detailed information.
 
 ```{r message=FALSE, warning=FALSE, fig.show='hide'}
-library(diffcyt)
-# create design & constrast matrix
-design <- createDesignMatrix(PBMC_md, cols_design=3)
-contrast <- createContrast(c(0, 1))
-# test for
-# - differential abundance (DA) of clusters
-# - differential states (DS) within clusters
-res_DA <- diffcyt(daF, design = design, contrast = contrast, 
-    analysis_type = "DA", method_DA = "diffcyt-DA-edgeR")
-res_DS <- diffcyt(daF, design = design, contrast = contrast, 
-    analysis_type = "DS", method_DS = "diffcyt-DS-limma", plot = FALSE)
+if (require(diffcyt)) {
+   # create design & constrast matrix
+   design <- createDesignMatrix(PBMC_md, cols_design=3)
+   contrast <- createContrast(c(0, 1))
+   # test for
+   # - differential abundance (DA) of clusters
+   # - differential states (DS) within clusters
+   res_DA <- diffcyt(daF, design = design, contrast = contrast, 
+       analysis_type = "DA", method_DA = "diffcyt-DA-edgeR")
+   res_DS <- diffcyt(daF, design = design, contrast = contrast, 
+       analysis_type = "DS", method_DS = "diffcyt-DS-limma", plot = FALSE)
+}
 ```
 
 ## `plotDiffHeatmap`: Heatmap of differential testing results
@@ -266,8 +267,10 @@ For differential state (DS) tests, `plotDiffHeatmap` will display
 Clusters (DA) and cluster-marker combinations (DS), respectively, will be marked as *significant* if their adjusted p-value falls below the threshold value specified with `th` (default 0.1), and will be ordered by significance if `order = TRUE` (the default). The number of top findings to display can be specified with `top_n` (default 20).
 
 ```{r fig.width=10, fig.height=6}
-plotDiffHeatmap(daF, res_DA, th = 1e-3, top_n = 25)
-plotDiffHeatmap(daF, res_DS, top_n = 10)
+if (require(diffcyt)) {
+   plotDiffHeatmap(daF, res_DA, th = 1e-3, top_n = 25)
+   plotDiffHeatmap(daF, res_DS, top_n = 10)
+}
 ```
 
 # Session Information

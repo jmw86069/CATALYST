@@ -16,6 +16,7 @@ ffsNorm <- reactive({
             flowCore::read.FCS(
                 filename=input$fcsNorm[[i, "datapath"]],
                 transformation=FALSE,
+                emptyValue=FALSE,
                 truncate_max_range=FALSE))
     }
 })

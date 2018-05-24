@@ -38,6 +38,7 @@ fsComp <- reactive({
             flowCore::read.FCS(
                 filename=fcs[[i, "datapath"]],
                 transformation=FALSE,
+                emptyValue=FALSE,
                 truncate_max_range=FALSE))
         fs <- as(ffs, "flowSet")
         nms <- input$fcsComp$name
@@ -79,6 +80,7 @@ ffControls <- reactive({
     flowCore::read.FCS(
         filename=input$fcsControls$datapath,
         transformation=FALSE,
+        emptyValue=FALSE,
         truncate_max_range=FALSE)
 })
 

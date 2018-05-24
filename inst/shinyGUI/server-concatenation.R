@@ -13,6 +13,7 @@ ffsConcat <- reactive({
         flowCore::read.FCS(
             filename=input$fcsConcat[[i, "datapath"]],
             transformation=FALSE,
+            emptyValue=FALSE,
             truncate_max_range=FALSE))
     # check validity of input flowFrames
     nPars <- sapply(ffs, function(ff) ncol(ff))

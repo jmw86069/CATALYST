@@ -17,6 +17,7 @@ ffDeba <- reactive({
         read.FCS(
             filename=input$fcsDeba$datapath,
             transformation=FALSE,
+            emptyValue=FALSE,
             truncate_max_range=FALSE)
     }
 })
